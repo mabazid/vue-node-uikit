@@ -1,26 +1,44 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <nav-bar :status="status" />
+  <main-layout>
+    <MoviesList />
+  </main-layout>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import MoviesList from './components/MoviesList.vue';
+import MainLayout from './components/MainLayout.vue';
+import NavBar from './components/NavBar.vue';
+import UIkit from 'uikit';
+import Icons from 'uikit/dist/js/uikit-icons';
+UIkit.use(Icons);
+
+import { watch, ref } from 'vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    MoviesList,
+    NavBar,
+    MainLayout,
+  },
+  setup() {
+    const authenticated = ref(false);
+    const status = ref('Login');
+
+    watch(authenticated, () => {
+      status.value = authenticated.value ? 'Logout' : 'login';
+      console.log(status.value);
+    });
+
+    return {
+      authenticated,
+      status,
+    };
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="less">
+@import '../node_modules/uikit/src/less/uikit.less';
 </style>
