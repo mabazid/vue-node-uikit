@@ -10,8 +10,10 @@
     <tbody>
       <movie-item
         v-for="movie in movies"
-        :key="movie.name"
+        :key="movie._id"
+        :id="movie._id"
         :name="movie.name"
+        :editing="movie.editing"
         :description="movie.description"
       />
     </tbody>
@@ -29,8 +31,7 @@ export default {
     status: String,
     movies: Array,
   },
-  setup() {
-  },
+  setup() {},
 };
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->

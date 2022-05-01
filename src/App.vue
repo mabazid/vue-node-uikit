@@ -12,13 +12,7 @@ import UIkit from 'uikit';
 import Icons from 'uikit/dist/js/uikit-icons';
 UIkit.use(Icons);
 
-import { watch, ref, reactive } from 'vue';
-
-const moviesList = [
-  { name: 'Movie1', description: 'this moves is amazing' },
-  { name: 'Movie2', description: 'this moves is dogshit' },
-  { name: 'Movie3', description: 'What a fantastic movie' },
-];
+import { watch, ref, reactive, provide } from 'vue';
 
 export default {
   name: 'App',
@@ -29,7 +23,28 @@ export default {
   setup() {
     const authenticated = ref(false);
     const status = ref('Login');
-    const movies = reactive({ list: moviesList });
+    const movies = reactive({
+      list: [
+        {
+          _id: '1231314',
+          editing: false,
+          name: 'Movie1',
+          description: 'this moves is amazing',
+        },
+        {
+          _id: '122114',
+          editing: false,
+          name: 'Movie2',
+          description: 'this moves is dogshit',
+        },
+        {
+          _id: '988104',
+          editing: false,
+          name: 'Movie3',
+          description: 'What a fantastic movie',
+        },
+      ],
+    });
 
     watch(authenticated, () => {
       status.value = authenticated.value ? 'Logout' : 'login';
@@ -39,6 +54,21 @@ export default {
     const addMovie = (movie) => {
       movies.list.push(movie);
     };
+
+    const removeMovie = (id) => {
+      console.log(id);
+      movies.list.splice(
+        movies.list.findIndex((e) => e._id === id),
+        1
+      );
+    };
+
+    const edit = (id) => {
+      movies.list.find((e) => e._id === id).editing = true;
+    };
+
+    provide('removeMovie', removeMovie);
+    provide('edit', edit);
 
     return {
       movies,
