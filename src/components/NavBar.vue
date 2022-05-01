@@ -3,10 +3,10 @@
     <div class="uk-navbar-left">
       <ul class="uk-navbar-nav uk-margin-small-left">
         <li class="uk-active">
-          <a href="#">Movies</a>
+          <router-link to="/">Movies</router-link>
         </li>
         <li>
-          <a href="#">Add Movie</a>
+          <router-link to="/add-movie">Add Movie</router-link>
         </li>
       </ul>
     </div>

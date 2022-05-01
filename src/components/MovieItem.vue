@@ -1,31 +1,23 @@
 <template>
-  <div class="uk-overflow-auto">
-    <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
-      <thead>
-        <tr>
-          <th class="uk-table-shrink"></th>
-          <th class="uk-table-shrink">Preserve</th>
-          <th class="uk-table-expand">Expand + Link</th>
-          <th class="uk-width-small">Truncate</th>
-          <th class="uk-table-shrink uk-text-nowrap">Shrink + Nowrap</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><input class="uk-checkbox" type="checkbox" /></td>
-          <td class="uk-table-link">
-            <a class="uk-link-reset" href=""
-              >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor.</a
-            >
-          </td>
-          <td class="uk-text-truncate">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor.
-          </td>
-          <td class="uk-text-nowrap">Lorem ipsum dolor</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <tr>
+    <td>{{ name }}</td>
+    <td>
+      {{ description }}
+    </td>
+    <td>
+      <div class="uk-child-width-expand" uk-grid>
+        <a class="uk-width-1-2" type="button" uk-icon="pencil" />
+        <a class="uk-width-1-2" type="button" uk-icon="trash" />
+      </div>
+    </td>
+  </tr>
 </template>
+<script>
+export default {
+  props: {
+    name: String,
+    description: String,
+  },
+  setup() {},
+};
+</script>

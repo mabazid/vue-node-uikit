@@ -1,17 +1,35 @@
 <template>
-  <movie-item />
+  <table class="uk-table uk-table-middle uk-table-divider uk-table-hover">
+    <thead>
+      <tr>
+        <th class="uk-width-small">Movie</th>
+        <th>Description</th>
+        <th class="uk-width-small">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <movie-item
+        v-for="movie in movies"
+        :key="movie.name"
+        :name="movie.name"
+        :description="movie.description"
+      />
+    </tbody>
+  </table>
 </template>
 <script>
 import MovieItem from './MovieItem.vue';
 
 export default {
-  name: 'HelloWorld',
   components: {
     MovieItem,
   },
   props: {
     msg: String,
     status: String,
+    movies: Array,
+  },
+  setup() {
   },
 };
 </script>
