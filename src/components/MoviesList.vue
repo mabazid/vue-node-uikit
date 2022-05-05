@@ -4,6 +4,7 @@
       <tr>
         <th class="uk-width-small">Movie</th>
         <th>Description</th>
+        <th class="uk-width-small">Rating</th>
         <th class="uk-width-small">Actions</th>
       </tr>
     </thead>
@@ -13,6 +14,7 @@
         :key="movie._id"
         :id="movie._id"
         :name="movie.name"
+        :rating="movie.rating"
         :editing="movie.editing"
         :description="movie.description"
       />

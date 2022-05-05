@@ -12,7 +12,8 @@ import UIkit from 'uikit';
 import Icons from 'uikit/dist/js/uikit-icons';
 UIkit.use(Icons);
 
-import { watch, ref, reactive, provide } from 'vue';
+import { watch, ref, reactive, provide, onBeforeMount } from 'vue';
+import { getMovies } from './helpers/backend.helper';
 
 export default {
   name: 'App',
@@ -21,29 +22,16 @@ export default {
     MainLayout,
   },
   setup() {
+    onBeforeMount(async () => {
+      const response = await getMovies();
+      movies.list = response.data.getMovies;
+      return movies.list;
+    });
+
     const authenticated = ref(false);
     const status = ref('Login');
     const movies = reactive({
-      list: [
-        {
-          _id: '1231314',
-          editing: false,
-          name: 'Movie1',
-          description: 'this moves is amazing',
-        },
-        {
-          _id: '122114',
-          editing: false,
-          name: 'Movie2',
-          description: 'this moves is dogshit',
-        },
-        {
-          _id: '988104',
-          editing: false,
-          name: 'Movie3',
-          description: 'What a fantastic movie',
-        },
-      ],
+      list: [],
     });
 
     watch(authenticated, () => {
