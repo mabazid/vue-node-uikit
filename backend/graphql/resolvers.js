@@ -8,7 +8,6 @@ module.exports = {
       rating: movie.rating,
       imdbRating: movie.imdbRating,
     });
-    // const response1 = await newMovie.save();
     await newMovie.save();
 
     return 'done';

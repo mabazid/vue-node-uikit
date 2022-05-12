@@ -1,14 +1,5 @@
 <template>
-  <table class="uk-table uk-table-middle uk-table-divider uk-table-hover">
-    <thead>
-      <tr>
-        <th class="uk-width-small">Movie</th>
-        <th>Description</th>
-        <th class="uk-width-small">Rating</th>
-        <th class="uk-width-small">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
+  <div class="uk-child-width-1-4@l uk-child-width-1-2@s" uk-grid uk-scrollspy="cls: uk-animation-fade; target: .uk-card; delay: 200; repeat: true">
       <movie-item
         v-for="movie in movies"
         :key="movie._id"
@@ -18,8 +9,7 @@
         :editing="movie.editing"
         :description="movie.description"
       />
-    </tbody>
-  </table>
+  </div>
 </template>
 <script>
 import MovieItem from './MovieItem.vue';

@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form @submit="submitForm">
     <fieldset class="uk-fieldset">
       <legend class="uk-legend">{{ title }}</legend>
 
@@ -8,9 +8,38 @@
           :value="name"
           class="uk-input"
           type="text"
-          placeholder="Movie Name"
+          placeholder="Search Movie"
           ref="nameInput"
+          @keydown.enter.prevent="afterKeyStroke"
         />
+        <div
+          uk-dropdown="animation: uk-animation-slide-top-small; duration: 1000; pos: bottom-justify; mode: click;"
+        >
+          <ul class="uk-nav uk-dropdown-nav">
+            <li key="empty" v-if="results.movies.length === 0" uk-spinner />
+            <li v-else v-for="movie in results.movies" :key="movie.title">
+              <div>
+                <div class="uk-card-header">
+                  <div class="uk-grid-small uk-flex-middle" uk-grid>
+                    <div class="uk-width-auto">
+                      <img height="100" width="50" :src="movie.Poster" />
+                    </div>
+                    <div class="uk-width-expand">
+                      <h3 class="uk-card-title uk-margin-remove-bottom">
+                        {{ movie.Title }}
+                      </h3>
+                      <p class="uk-text-meta uk-margin-remove-top">
+                        <time datetime="2016-04-01T19:00">{{
+                          movie.Year
+                        }}</time>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
 
       <div class="uk-margin">
@@ -39,15 +68,16 @@
         />
       </div>
     </fieldset>
-    <button class="uk-button uk-button-secondary" @click="submitForm">
+    <button class="uk-button uk-button-secondary">
       {{ buttonText }}
     </button>
   </form>
 </template>
 <script>
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { addMovie } from '../helpers/backend.helper';
+import { getMoviesSuggestions } from '../helpers/backend.helper';
 
 export default {
   props: {
@@ -60,6 +90,9 @@ export default {
   setup(props) {
     const router = useRouter();
     const nameInput = ref(null);
+    const results = reactive({
+      movies: [],
+    });
     const descriptionInput = ref(null);
     const localRating = ref(props.rating ? props.rating : 5);
 
@@ -76,7 +109,19 @@ export default {
       router.replace('/');
     };
 
-    return { nameInput, descriptionInput, localRating, submitForm };
+    const afterKeyStroke = async () => {
+      const res = await getMoviesSuggestions(nameInput.value.value);
+      results.movies = res.Search;
+    };
+
+    return {
+      submitForm,
+      afterKeyStroke,
+      nameInput,
+      descriptionInput,
+      localRating,
+      results,
+    };
   },
 };
 </script>

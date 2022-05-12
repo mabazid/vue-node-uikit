@@ -14,16 +14,6 @@ const addMovie = async (movie) => {
     `,
   };
 
-//   const name = movie.name;
-//   const description = movie.name;
-//   const rating = movie.name;
-//   const imdbRating = movie.name;
-//   const query = `mutation CreateMovie($input: MovieInput) {
-//     createMovie(input: $input) {
-//       id
-//     }
-//   }`;
-
   const response = await fetch('http://localhost:5000/graphql', {
     method: 'POST',
     headers: {
@@ -43,7 +33,6 @@ const getMovies = async () => {
             _id
             name
             description
-
         }
     }
     `,
@@ -59,4 +48,15 @@ const getMovies = async () => {
   return await response.json();
 };
 
-export { getMovies, addMovie };
+const getMoviesSuggestions = async (value) => {
+  const response = await fetch(
+    `http://www.omdbapi.com/?s=${value}&apikey=b332f12f`,
+    {
+      method: 'GET',
+    }
+  );
+  const final = await response.json();
+  return final;
+};
+
+export { getMovies, addMovie, getMoviesSuggestions };
