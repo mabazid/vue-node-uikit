@@ -5,36 +5,29 @@
 
       <div class="uk-margin">
         <input
-          :value="name"
           class="uk-input"
           type="text"
           placeholder="Search Movie"
-          ref="nameInput"
+          v-model="nameInput"
           @keydown.enter.prevent="afterKeyStroke"
         />
-        <div
-          uk-dropdown="animation: uk-animation-slide-top-small; duration: 1000; pos: bottom-justify; mode: click;"
-        >
-          <ul class="uk-nav uk-dropdown-nav">
+      </div>
+      <div class="uk-inline">
+        <div uk-dropdown="duration: 500; pos: bottom-justify; mode: click;">
+          <ul class="uk-nav uk-list-divider uk-dropdown-nav">
             <li key="empty" v-if="results.movies.length === 0" uk-spinner />
             <li v-else v-for="movie in results.movies" :key="movie.title">
-              <div>
-                <div class="uk-card-header">
-                  <div class="uk-grid-small uk-flex-middle" uk-grid>
-                    <div class="uk-width-auto">
-                      <img height="100" width="50" :src="movie.Poster" />
-                    </div>
-                    <div class="uk-width-expand">
-                      <h3 class="uk-card-title uk-margin-remove-bottom">
-                        {{ movie.Title }}
-                      </h3>
-                      <p class="uk-text-meta uk-margin-remove-top">
-                        <time datetime="2016-04-01T19:00">{{
-                          movie.Year
-                        }}</time>
-                      </p>
-                    </div>
-                  </div>
+              <div class="uk-grid-small" uk-grid>
+                <div class="uk-width-auto">
+                  <img height="100" width="50" :src="movie.Poster" />
+                </div>
+                <div class="uk-width-expand">
+                  <h3 class="uk-card-title uk-margin-remove-bottom">
+                    {{ movie.Title }}
+                  </h3>
+                  <p class="uk-text-meta">
+                    <time datetime="2016-04-01T19:00">{{ movie.Year }}</time>
+                  </p>
                 </div>
               </div>
             </li>
@@ -99,7 +92,7 @@ export default {
     const submitForm = async (event) => {
       event.preventDefault();
       const movie = {
-        name: nameInput.value.value,
+        name: nameInput.value,
         description: descriptionInput.value.value,
         rating: localRating.value,
         imdbRating: 8.7,
@@ -110,7 +103,7 @@ export default {
     };
 
     const afterKeyStroke = async () => {
-      const res = await getMoviesSuggestions(nameInput.value.value);
+      const res = await getMoviesSuggestions(nameInput.value);
       results.movies = res.Search;
     };
 
